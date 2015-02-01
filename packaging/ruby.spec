@@ -10,8 +10,6 @@ License: Ruby License/GPL
 URL: http://www.ruby-lang.org
 Source0: %{name}-%{version}.tar.gz
 
-#!BuildIgnore: ruby-x86-arm
-
 %description
 Ruby is the interpreted scripting language for quick and easy object-oriented programming.
 It has many features to process text files and to do system management tasks (as in Perl).
@@ -27,7 +25,7 @@ It is simple, straight-forward, and extensible.
   --without-X11 \
   --without-tk \
   --includedir=%{_includedir}/ruby \
-  --libdir=%{_libdir}
+  --with-rubylibprefix=%{_prefix}/lib/ruby
 
 %ifarch %{arm}
 %ifarch armv7el armv7l
@@ -35,11 +33,15 @@ It is simple, straight-forward, and extensible.
 %else
 %define platform    armv7hl-linux-eabi
 %endif
-%else
+%endif
+%ifarch %{ix86}
 %define platform    i586-linux
 %endif
+%ifarch x86_64
+%define platform    x86_64-linux
+%endif
 
-make
+make %{?_smp_mflags}
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -60,74 +62,74 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/ruby/ruby-1.9.1/%{platform}/ruby/*
 
 %{_libdir}/libruby-static.a
-%{_libdir}/ruby/gems/1.9.1/specifications/*
-%{_libdir}/ruby/1.9.1/*
-%{_libdir}/ruby/1.9.1/bigdecimal/*
-%{_libdir}/ruby/1.9.1/cgi/*
-%{_libdir}/ruby/1.9.1/cgi/session/*
-%{_libdir}/ruby/1.9.1/date/*
-%{_libdir}/ruby/1.9.1/date/delta/*
-%{_libdir}/ruby/1.9.1/digest/*
-%{_libdir}/ruby/1.9.1/dl/*
-%{_libdir}/ruby/1.9.1/drb/*
-%{_libdir}/ruby/1.9.1/%{platform}/*
-%{_libdir}/ruby/1.9.1/%{platform}/digest/*
-%{_libdir}/ruby/1.9.1/%{platform}/dl/*
-%{_libdir}/ruby/1.9.1/%{platform}/enc/*
-%{_libdir}/ruby/1.9.1/%{platform}/enc/trans/*
-%{_libdir}/ruby/1.9.1/%{platform}/io/*
-%{_libdir}/ruby/1.9.1/%{platform}/json/ext/*
-%{_libdir}/ruby/1.9.1/%{platform}/mathn/*
-%{_libdir}/ruby/1.9.1/%{platform}/racc/*
-%{_libdir}/ruby/1.9.1/irb/*
-%{_libdir}/ruby/1.9.1/irb/cmd/*
-%{_libdir}/ruby/1.9.1/irb/ext/*
-%{_libdir}/ruby/1.9.1/irb/lc/*
-%{_libdir}/ruby/1.9.1/irb/lc/ja/*
-%{_libdir}/ruby/1.9.1/json/*
-%{_libdir}/ruby/1.9.1/json/add/*
-%{_libdir}/ruby/1.9.1/minitest/*
-%{_libdir}/ruby/1.9.1/net/*
-%{_libdir}/ruby/1.9.1/optparse/*
-%{_libdir}/ruby/1.9.1/racc/*
-%{_libdir}/ruby/1.9.1/rake/*
-%{_libdir}/ruby/1.9.1/rake/contrib/*
-%{_libdir}/ruby/1.9.1/rake/loaders/*
-%{_libdir}/ruby/1.9.1/rbconfig/*
-%{_libdir}/ruby/1.9.1/rdoc/*
-%{_libdir}/ruby/1.9.1/rdoc/generator/*
-%{_libdir}/ruby/1.9.1/rdoc/generator/template/darkfish/*
-%{_libdir}/ruby/1.9.1/rdoc/generator/template/darkfish/images/*
-%{_libdir}/ruby/1.9.1/rdoc/generator/template/darkfish/js/*
-%{_libdir}/ruby/1.9.1/rdoc/markup/*
-%{_libdir}/ruby/1.9.1/rdoc/parser/*
-%{_libdir}/ruby/1.9.1/rdoc/ri/*
-%{_libdir}/ruby/1.9.1/rexml/*
-%{_libdir}/ruby/1.9.1/rexml/dtd/*
-%{_libdir}/ruby/1.9.1/rexml/encodings/*
-%{_libdir}/ruby/1.9.1/rexml/formatters/*
-%{_libdir}/ruby/1.9.1/rexml/light/*
-%{_libdir}/ruby/1.9.1/rexml/parsers/*
-%{_libdir}/ruby/1.9.1/rexml/validation/*
-%{_libdir}/ruby/1.9.1/rinda/*
-%{_libdir}/ruby/1.9.1/rss/*
-%{_libdir}/ruby/1.9.1/rss/content/*
-%{_libdir}/ruby/1.9.1/rss/dublincore/*
-%{_libdir}/ruby/1.9.1/rss/maker/*
-%{_libdir}/ruby/1.9.1/rubygems/*
-%{_libdir}/ruby/1.9.1/rubygems/commands/*
-%{_libdir}/ruby/1.9.1/rubygems/ext/*
-%{_libdir}/ruby/1.9.1/rubygems/package/*
-%{_libdir}/ruby/1.9.1/rubygems/package/tar_reader/*
-%{_libdir}/ruby/1.9.1/shell/*
-%{_libdir}/ruby/1.9.1/syck/*
-%{_libdir}/ruby/1.9.1/test/*
-%{_libdir}/ruby/1.9.1/test/unit/*
-%{_libdir}/ruby/1.9.1/uri/*
-%{_libdir}/ruby/1.9.1/webrick/*
-%{_libdir}/ruby/1.9.1/webrick/httpauth/*
-%{_libdir}/ruby/1.9.1/webrick/httpservlet/*
-%{_libdir}/ruby/1.9.1/xmlrpc/*
-%{_libdir}/ruby/1.9.1/yaml/*
+%{_prefix}/lib/ruby/gems/1.9.1/specifications/*
+%{_prefix}/lib/ruby/1.9.1/*
+%{_prefix}/lib/ruby/1.9.1/bigdecimal/*
+%{_prefix}/lib/ruby/1.9.1/cgi/*
+%{_prefix}/lib/ruby/1.9.1/cgi/session/*
+%{_prefix}/lib/ruby/1.9.1/date/*
+%{_prefix}/lib/ruby/1.9.1/date/delta/*
+%{_prefix}/lib/ruby/1.9.1/digest/*
+%{_prefix}/lib/ruby/1.9.1/dl/*
+%{_prefix}/lib/ruby/1.9.1/drb/*
+%{_prefix}/lib/ruby/1.9.1/%{platform}/*
+%{_prefix}/lib/ruby/1.9.1/%{platform}/digest/*
+%{_prefix}/lib/ruby/1.9.1/%{platform}/dl/*
+%{_prefix}/lib/ruby/1.9.1/%{platform}/enc/*
+%{_prefix}/lib/ruby/1.9.1/%{platform}/enc/trans/*
+%{_prefix}/lib/ruby/1.9.1/%{platform}/io/*
+%{_prefix}/lib/ruby/1.9.1/%{platform}/json/ext/*
+%{_prefix}/lib/ruby/1.9.1/%{platform}/mathn/*
+%{_prefix}/lib/ruby/1.9.1/%{platform}/racc/*
+%{_prefix}/lib/ruby/1.9.1/irb/*
+%{_prefix}/lib/ruby/1.9.1/irb/cmd/*
+%{_prefix}/lib/ruby/1.9.1/irb/ext/*
+%{_prefix}/lib/ruby/1.9.1/irb/lc/*
+%{_prefix}/lib/ruby/1.9.1/irb/lc/ja/*
+%{_prefix}/lib/ruby/1.9.1/json/*
+%{_prefix}/lib/ruby/1.9.1/json/add/*
+%{_prefix}/lib/ruby/1.9.1/minitest/*
+%{_prefix}/lib/ruby/1.9.1/net/*
+%{_prefix}/lib/ruby/1.9.1/optparse/*
+%{_prefix}/lib/ruby/1.9.1/racc/*
+%{_prefix}/lib/ruby/1.9.1/rake/*
+%{_prefix}/lib/ruby/1.9.1/rake/contrib/*
+%{_prefix}/lib/ruby/1.9.1/rake/loaders/*
+%{_prefix}/lib/ruby/1.9.1/rbconfig/*
+%{_prefix}/lib/ruby/1.9.1/rdoc/*
+%{_prefix}/lib/ruby/1.9.1/rdoc/generator/*
+%{_prefix}/lib/ruby/1.9.1/rdoc/generator/template/darkfish/*
+%{_prefix}/lib/ruby/1.9.1/rdoc/generator/template/darkfish/images/*
+%{_prefix}/lib/ruby/1.9.1/rdoc/generator/template/darkfish/js/*
+%{_prefix}/lib/ruby/1.9.1/rdoc/markup/*
+%{_prefix}/lib/ruby/1.9.1/rdoc/parser/*
+%{_prefix}/lib/ruby/1.9.1/rdoc/ri/*
+%{_prefix}/lib/ruby/1.9.1/rexml/*
+%{_prefix}/lib/ruby/1.9.1/rexml/dtd/*
+%{_prefix}/lib/ruby/1.9.1/rexml/encodings/*
+%{_prefix}/lib/ruby/1.9.1/rexml/formatters/*
+%{_prefix}/lib/ruby/1.9.1/rexml/light/*
+%{_prefix}/lib/ruby/1.9.1/rexml/parsers/*
+%{_prefix}/lib/ruby/1.9.1/rexml/validation/*
+%{_prefix}/lib/ruby/1.9.1/rinda/*
+%{_prefix}/lib/ruby/1.9.1/rss/*
+%{_prefix}/lib/ruby/1.9.1/rss/content/*
+%{_prefix}/lib/ruby/1.9.1/rss/dublincore/*
+%{_prefix}/lib/ruby/1.9.1/rss/maker/*
+%{_prefix}/lib/ruby/1.9.1/rubygems/*
+%{_prefix}/lib/ruby/1.9.1/rubygems/commands/*
+%{_prefix}/lib/ruby/1.9.1/rubygems/ext/*
+%{_prefix}/lib/ruby/1.9.1/rubygems/package/*
+%{_prefix}/lib/ruby/1.9.1/rubygems/package/tar_reader/*
+%{_prefix}/lib/ruby/1.9.1/shell/*
+%{_prefix}/lib/ruby/1.9.1/syck/*
+%{_prefix}/lib/ruby/1.9.1/test/*
+%{_prefix}/lib/ruby/1.9.1/test/unit/*
+%{_prefix}/lib/ruby/1.9.1/uri/*
+%{_prefix}/lib/ruby/1.9.1/webrick/*
+%{_prefix}/lib/ruby/1.9.1/webrick/httpauth/*
+%{_prefix}/lib/ruby/1.9.1/webrick/httpservlet/*
+%{_prefix}/lib/ruby/1.9.1/xmlrpc/*
+%{_prefix}/lib/ruby/1.9.1/yaml/*
 
 %{_mandir}/man1/*
