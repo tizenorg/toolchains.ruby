@@ -4,7 +4,8 @@
 Name: ruby
 Summary: An interpreter of object-oriented scripting language
 Version: %{rubyver}
-Release: 1
+Release: %{?release_prefix:%{release_prefix}.}1.48.%{?dist}%{!?dist:tizen}
+VCS:     toolchains/ruby#Z910F_PROTEX_0625-2-ga8c3afda48c3b7bf3d8dd211d8faebb465e446ad
 Group: Development/Languages
 License: Ruby License/GPL
 URL: http://www.ruby-lang.org
@@ -133,3 +134,34 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/ruby/1.9.1/yaml/*
 
 %{_mandir}/man1/*
+%changelog
+* Tue Jul  1 2014 SLP SCM <slpsystem.m@samsung.com> - None 
+- PROJECT: toolchains/ruby
+- COMMIT_ID: a8c3afda48c3b7bf3d8dd211d8faebb465e446ad
+- BRANCH: master
+- PATCHSET_REVISION: a8c3afda48c3b7bf3d8dd211d8faebb465e446ad
+- CHANGE_OWNER: \"UkJung Kim\" <ujkim@samsung.com>
+- PATCHSET_UPLOADER: \"UkJung Kim\" <ujkim@samsung.com>
+- CHANGE_URL: http://slp-info.sec.samsung.net/gerrit/534219
+- PATCHSET_REVISION: a8c3afda48c3b7bf3d8dd211d8faebb465e446ad
+- TAGGER: SLP SCM <slpsystem.m@samsung.com>
+- Gerrit patchset approval info:
+- UkJung Kim <ujkim@samsung.com> Verified : 1
+- Newton Lee <newton.lee@samsung.com> Code-Review : 2
+- Newton Lee <newton.lee@samsung.com> Verified : 1
+- CHANGE_SUBJECT: Merged x86_64 support to master
+- Merged x86_64 support to master
+* Tue Sep  3 2013 Seongho Jeong <sh33.jeong@samsung.com> - None 
+- PROJECT: toolchains/ruby
+- COMMIT_ID: aaf3d9e160f8f19c751172871c8c05a8398601c4
+- PATCHSET_REVISION: aaf3d9e160f8f19c751172871c8c05a8398601c4
+- CHANGE_OWNER: \"Seongho Jeong\" <sh33.jeong@samsung.com>
+- PATCHSET_UPLOADER: \"Seongho Jeong\" <sh33.jeong@samsung.com>
+- CHANGE_URL: http://slp-info.sec.samsung.net/gerrit/262521
+- PATCHSET_REVISION: aaf3d9e160f8f19c751172871c8c05a8398601c4
+- TAGGER: Seongho Jeong <sh33.jeong@samsung.com>
+- Gerrit patchset approval info:
+- UkJung Kim <ujkim@samsung.com> Code Review : 2
+- Seongho Jeong <sh33.jeong@samsung.com> Verified : 1
+- CHANGE_SUBJECT: \"#!buildignore: ruby-x86-arm\" added in .spec file
+- "#!buildignore: ruby-x86-arm" added in .spec file
